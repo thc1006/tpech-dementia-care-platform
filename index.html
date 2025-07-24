@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸福小棧失智社區服務據點</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs7NP9Nkr3sQZq5Zq7Kv9tD2Lj8iO9pQq&callback=initMap"></script>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-home"></i>
+                <span>幸福小棧</span>
+            </div>
+            <button class="nav-toggle" aria-label="切換選單">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active" data-section="home">首頁</a></li>
+                <li><a href="#resources" class="nav-link" data-section="resources">資源資訊</a></li>
+                <li><a href="#case-management" class="nav-link" data-section="case-management">個案管理</a></li>
+                <li><a href="#interactive" class="nav-link" data-section="interactive">互動服務</a></li>
+                <li><a href="#analytics" class="nav-link" data-section="analytics">成效分析</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要內容區域 -->
+    <main class="main-content">
+        <!-- 首頁模組 -->
+        <section id="home" class="section active">
+            <div class="hero-banner">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>幸福小棧失智社區服務據點</h1>
+                        <p class="hero-subtitle">為失智症患者及家屬提供專業照護支持與資源連結</p>
+                        <div class="station-info">
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>臺北市士林區忠誠路一段171巷10弄12號（蘭雅教會）</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-phone"></i>
+                                <span>02-2835-3456#5178</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <span>每週二、三、五 09:00–16:00</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-users"></i>
+                                <span>輕中度失智（CDR 0.5–1、CMS ≤ 3）；需家屬陪同</span>
+                            </div>
+                        </div>
+                        <div class="hero-actions">
+                            <button class="btn btn--primary btn--lg" onclick="makeCall('02-2835-3456')">
+                                <i class="fas fa-phone"></i> 立即聯絡
+                            </button>
+                            <button class="btn btn--secondary btn--lg" data-section="resources">
+                                <i class="fas fa-info-circle"></i> 了解服務
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="services-grid">
+                    <h2>主要服務項目</h2>
+                    <div class="services-cards">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <h3>現場諮詢</h3>
+                            <p>提供失智症照護諮詢、失智資源手冊、衛教文宣</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>認知促進課程</h3>
+                            <p>懷舊療法、音樂治療、手作活動等非藥物介入</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <h3>社區連結</h3>
+                            <p>協助轉介長照、失智共同照護中心、政府補助</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>個案追蹤</h3>
+                            <p>定期電話問安、家訪確認服務使用狀況</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 資源資訊模組 -->
+        <section id="resources" class="section">
+            <div class="container">
+                <h2>資源資訊</h2>
+                
+                <!-- 據點資訊 -->
+                <div class="resources-section">
+                    <h3><i class="fas fa-map-marked-alt"></i> 據點資訊與交通指引</h3>
+                    <div class="location-info">
+                        <div class="map-container">
+                            <div id="map" style="height: 300px; width: 100%;"></div>
+                        </div>
+                        <div class="transport-info">
+                            <h4>交通資訊</h4>
+                            <div class="transport-item">
+                                <i class="fas fa-subway"></i>
+                                <span>捷運：淡水信義線芝山站2號出口，步行約10分鐘</span>
+                            </div>
+                            <div class="transport-item">
+                                <i class="fas fa-bus"></i>
+                                <span>公車：216、224、285、616、620至「蘭雅」站</span>
+                            </div>
+                            <div class="transport-item">
+                                <i class="fas fa-wheelchair"></i>
+                                <span>無障礙設施：設有無障礙坡道及專用停車位</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 政府補助專區 -->
+                <div class="resources-section">
+                    <h3><i class="fas fa-hand-holding-heart"></i> 政府補助專區</h3>
+                    <div class="subsidies-grid">
+                        <div class="subsidy-card">
+                            <h4>衛星定位器補助</h4>
+                            <p><strong>對象：</strong>65歲以上失智者或50歲以上身心障礙者，有走失風險者</p>
+                            <p><strong>補助：</strong>政府補助全額或部分費用</p>
+                            <p><strong>申請：</strong>至戶籍所在地區公所或社會局申請</p>
+                            <button class="btn btn--primary btn--sm">詳細資訊</button>
+                        </div>
+                        <div class="subsidy-card">
+                            <h4>愛的手鍊</h4>
+                            <p><strong>對象：</strong>失智者預防走失</p>
+                            <p><strong>補助：</strong>申請免費，含24小時協尋專線</p>
+                            <p><strong>申請：</strong>至失蹤老人協尋中心或社會局申請</p>
+                            <button class="btn btn--primary btn--sm">詳細資訊</button>
+                        </div>
+                        <div class="subsidy-card">
+                            <h4>重大傷病卡</h4>
+                            <p><strong>對象：</strong>經神經科／精神科專科醫師診斷之失智者</p>
+                            <p><strong>補助：</strong>住院與門診部分負擔全免</p>
+                            <p><strong>申請：</strong>持診斷證明至健保署申請</p>
+                            <button class="btn btn--primary btn--sm">詳細資訊</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 衛教資源下載 -->
+                <div class="resources-section">
+                    <h3><i class="fas fa-download"></i> 衛教資源下載</h3>
+                    <div class="materials-list">
+                        <div class="material-item">
+                            <div class="material-info">
+                                <i class="fas fa-file-pdf"></i>
+                                <div>
+                                    <h4>失智症十大警訊</h4>
+                                    <span class="material-meta">PDF | 中文 | 2.5MB</span>
+                                </div>
+                            </div>
+                            <button class="btn btn--outline btn--sm" onclick="downloadFile('失智症十大警訊.pdf')">
+                                <i class="fas fa-download"></i> 下載
+                            </button>
+                        </div>
+                        <div class="material-item">
+                            <div class="material-info">
+                                <i class="fas fa-file-pdf"></i>
+                                <div>
+                                    <h4>家屬照護指南</h4>
+                                    <span class="material-meta">PDF | 中文/英文 | 5.2MB</span>
+                                </div>
+                            </div>
+                            <button class="btn btn--outline btn--sm" onclick="downloadFile('家屬照護指南.pdf')">
+                                <i class="fas fa-download"></i> 下載
+                            </button>
+                        </div>
+                        <div class="material-item">
+                            <div class="material-info">
+                                <i class="fas fa-video"></i>
+                                <div>
+                                    <h4>失智友善四大幸福影片</h4>
+                                    <span class="material-meta">影片連結 | 中文 | 15分鐘</span>
+                                </div>
+                            </div>
+                            <button class="btn btn--outline btn--sm" onclick="openVideo()">
+                                <i class="fas fa-play"></i> 觀看
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 合作單位 -->
+                <div class="resources-section">
+                    <h3><i class="fas fa-handshake"></i> 合作單位</h3>
+                    <div class="partners-list">
+                        <div class="partner-item">
+                            <h4>臺北市立聯合醫院失智共同照護中心</h4>
+                            <p>疑似個案轉介、需求評估、資源連結</p>
+                            <button class="btn btn--secondary btn--sm" onclick="makeCall('02-2835-3456')">
+                                <i class="fas fa-phone"></i> 02-2835-3456#5178
+                            </button>
+                        </div>
+                        <div class="partner-item">
+                            <h4>臺北市政府衛生局</h4>
+                            <p>失智篩檢、政策諮詢</p>
+                            <button class="btn btn--secondary btn--sm" onclick="makeCall('1999')">
+                                <i class="fas fa-phone"></i> 1999
+                            </button>
+                        </div>
+                        <div class="partner-item">
+                            <h4>台灣失智症協會</h4>
+                            <p>家屬支持團體、瑞智學堂</p>
+                            <button class="btn btn--secondary btn--sm" onclick="makeCall('02-2598-8580')">
+                                <i class="fas fa-phone"></i> 02-2598-8580
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 個案管理模組 -->
+        <section id="case-management" class="section hidden">
+            <div class="container">
+                <h2>個案管理系統</h2>
+                <div class="case-tabs">
+                    <button class="tab-btn active" data-tab="basic">基本資料</button>
+                    <button class="tab-btn" data-tab="assessment">評估量表</button>
+                    <button class="tab-btn" data-tab="tracking">追蹤紀錄</button>
+                    <button class="tab-btn" data-tab="reminders">提醒通知</button>
+                </div>
+
+                <!-- 基本資料表單 -->
+                <div id="basic" class="tab-content active">
+                    <form class="case-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">患者姓名</label>
+                                <input type="text" class="form-control" id="patientName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">身分證字號</label>
+                                <input type="text" class="form-control" id="patientId" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">出生日期</label>
+                                <input type="date" class="form-control" id="birthDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">聯絡電話</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">住址</label>
+                                <input type="text" class="form-control" id="address" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">緊急聯絡人</label>
+                                <input type="text" class="form-control" id="emergencyContact" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn--primary">儲存資料</button>
+                            <button type="button" class="btn btn--secondary" onclick="clearForm()">清除</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 評估量表 -->
+                <div id="assessment" class="tab-content">
+                    <div class="assessment-tools">
+                        <div class="assessment-card">
+                            <h3>CDR 臨床失智評估量表</h3>
+                            <p>評估記憶、定向感、判斷和解決問題、社區事務、家居和嗜好、個人照料</p>
+                            <button class="btn btn--primary" onclick="openAssessment('CDR')">開始評估</button>
+                        </div>
+                        <div class="assessment-card">
+                            <h3>MMSE 簡易智能測驗</h3>
+                            <p>評估定向感、記憶、注意力和計算、回憶、語言能力</p>
+                            <button class="btn btn--primary" onclick="openAssessment('MMSE')">開始評估</button>
+                        </div>
+                        <div class="assessment-card">
+                            <h3>ADL 日常生活活動能力量表</h3>
+                            <p>評估進食、個人衛生、穿衣、如廁、移位、步行能力</p>
+                            <button class="btn btn--primary" onclick="openAssessment('ADL')">開始評估</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 追蹤紀錄 -->
+                <div id="tracking" class="tab-content">
+                    <div class="tracking-form">
+                        <form>
+                            <div class="form-group">
+                                <label class="form-label">追蹤日期</label>
+                                <input type="date" class="form-control" id="trackingDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">追蹤方式</label>
+                                <select class="form-control" id="trackingMethod">
+                                    <option value="phone">電話關懷</option>
+                                    <option value="visit">家庭訪視</option>
+                                    <option value="clinic">門診追蹤</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">狀況描述</label>
+                                <textarea class="form-control" id="trackingNotes" rows="4"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary">新增紀錄</button>
+                        </form>
+                    </div>
+                    <div class="tracking-history">
+                        <h4>歷史紀錄</h4>
+                        <div id="trackingList" class="tracking-list">
+                            <!-- 追蹤紀錄將由 JavaScript 動態生成 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 提醒通知 -->
+                <div id="reminders" class="tab-content">
+                    <div class="reminders-section">
+                        <h3>設定提醒</h3>
+                        <form class="reminder-form">
+                            <div class="form-group">
+                                <label class="form-label">提醒類型</label>
+                                <select class="form-control" id="reminderType">
+                                    <option value="appointment">回診提醒</option>
+                                    <option value="lecture">講座活動</option>
+                                    <option value="subsidy">補助到期</option>
+                                    <option value="follow-up">追蹤聯絡</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">提醒日期</label>
+                                <input type="datetime-local" class="form-control" id="reminderDate">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">提醒內容</label>
+                                <textarea class="form-control" id="reminderContent" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary">設定提醒</button>
+                        </form>
+                    </div>
+                    <div class="emergency-contacts">
+                        <h3>緊急聯絡</h3>
+                        <div class="emergency-buttons">
+                            <button class="btn btn--error btn--lg" onclick="makeCall('119')">
+                                <i class="fas fa-ambulance"></i> 119 緊急救護
+                            </button>
+                            <button class="btn btn--warning btn--lg" onclick="makeCall('110')">
+                                <i class="fas fa-shield-alt"></i> 110 報案專線
+                            </button>
+                            <button class="btn btn--primary btn--lg" onclick="makeCall('02-2835-3456')">
+                                <i class="fas fa-hospital"></i> 幸福小棧
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 互動服務模組 -->
+        <section id="interactive" class="section hidden">
+            <div class="container">
+                <h2>互動服務</h2>
+                
+                <!-- 線上諮詢 -->
+                <div class="interactive-section">
+                    <h3><i class="fas fa-comments"></i> 線上諮詢</h3>
+                    <form class="consultation-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">姓名</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">聯絡電話</label>
+                                <input type="tel" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">諮詢類型</label>
+                                <select class="form-control" required>
+                                    <option value="">請選擇</option>
+                                    <option value="care">照護諮詢</option>
+                                    <option value="resource">資源連結</option>
+                                    <option value="subsidy">補助申請</option>
+                                    <option value="assessment">評估服務</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">諮詢內容</label>
+                                <textarea class="form-control" rows="4" required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn--primary">提交諮詢</button>
+                    </form>
+                </div>
+
+                <!-- 記憶門診預約 -->
+                <div class="interactive-section">
+                    <h3><i class="fas fa-calendar-check"></i> 記憶門診預約</h3>
+                    <div class="appointment-booking">
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button class="btn btn--outline btn--sm" id="prevMonth">上月</button>
+                                <h4 id="currentMonth">2025年7月</h4>
+                                <button class="btn btn--outline btn--sm" id="nextMonth">下月</button>
+                            </div>
+                            <div class="calendar-grid" id="calendar">
+                                <!-- 日曆將由 JavaScript 生成 -->
+                            </div>
+                        </div>
+                        <div class="time-slots">
+                            <h4>可預約時段</h4>
+                            <div class="time-buttons" id="timeSlots">
+                                <button class="time-btn">09:00</button>
+                                <button class="time-btn">10:00</button>
+                                <button class="time-btn">11:00</button>
+                                <button class="time-btn">14:00</button>
+                                <button class="time-btn">15:00</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 活動報名 -->
+                <div class="interactive-section">
+                    <h3><i class="fas fa-users"></i> 活動報名</h3>
+                    <div class="activities-list">
+                        <div class="activity-card">
+                            <h4>家屬支持團體</h4>
+                            <p>每月第二個週六 10:00-12:00</p>
+                            <p>分享照護經驗，提供情感支持</p>
+                            <button class="btn btn--primary">立即報名</button>
+                        </div>
+                        <div class="activity-card">
+                            <h4>照護技巧課程</h4>
+                            <p>每月第三個週三 14:00-16:00</p>
+                            <p>學習實用的照護技巧與方法</p>
+                            <button class="btn btn--primary">立即報名</button>
+                        </div>
+                        <div class="activity-card">
+                            <h4>認知促進活動</h4>
+                            <p>每週二、五 10:00-11:30</p>
+                            <p>音樂治療、懷舊療法、手作活動</p>
+                            <button class="btn btn--primary">立即報名</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 學習資源 -->
+                <div class="interactive-section">
+                    <h3><i class="fas fa-graduation-cap"></i> 多媒體學習資源</h3>
+                    <div class="learning-resources">
+                        <div class="resource-card">
+                            <div class="resource-thumbnail">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <h4>認知促進技巧</h4>
+                            <p>學習如何透過遊戲促進認知功能</p>
+                            <button class="btn btn--outline">觀看影片</button>
+                        </div>
+                        <div class="resource-card">
+                            <div class="resource-thumbnail">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <h4>懷舊療法介紹</h4>
+                            <p>了解懷舊療法的原理與實作方法</p>
+                            <button class="btn btn--outline">觀看影片</button>
+                        </div>
+                        <div class="resource-card">
+                            <div class="resource-thumbnail">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <h4>居家安全指南</h4>
+                            <p>打造失智友善的居家環境</p>
+                            <button class="btn btn--outline">觀看影片</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 成效分析模組 -->
+        <section id="analytics" class="section hidden">
+            <div class="container">
+                <h2>成效分析與管理</h2>
+                
+                <!-- 服務統計 -->
+                <div class="analytics-section">
+                    <h3><i class="fas fa-chart-bar"></i> 服務統計</h3>
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>本月服務人次</h4>
+                                <span class="stat-number">173</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>課程參與率</h4>
+                                <span class="stat-number">85%</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>資源下載次數</h4>
+                                <span class="stat-number">234</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>轉介成功率</h4>
+                                <span class="stat-number">92%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 圖表區域 -->
+                <div class="analytics-section">
+                    <h3>數據視覺化</h3>
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h4>月度服務人次趨勢</h4>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="visitsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h4>服務項目使用分佈</h4>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="servicesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 報表匯出 -->
+                <div class="analytics-section">
+                    <h3><i class="fas fa-file-export"></i> 報表匯出</h3>
+                    <div class="export-options">
+                        <button class="btn btn--primary" onclick="exportReport('monthly')">
+                            <i class="fas fa-file-csv"></i> 匯出月報表 (CSV)
+                        </button>
+                        <button class="btn btn--primary" onclick="exportReport('quarterly')">
+                            <i class="fas fa-file-pdf"></i> 匯出季報表 (PDF)
+                        </button>
+                        <button class="btn btn--primary" onclick="exportReport('annual')">
+                            <i class="fas fa-file-excel"></i> 匯出年報表 (Excel)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>聯絡資訊</h4>
+                    <p>臺北市士林區忠誠路一段171巷10弄12號</p>
+                    <p>電話：02-2835-3456#5178</p>
+                    <p>服務時間：每週二、三、五 09:00–16:00</p>
+                </div>
+                <div class="footer-section">
+                    <h4>緊急聯絡</h4>
+                    <p>緊急救護：119</p>
+                    <p>報案專線：110</p>
+                    <p>市民熱線：1999</p>
+                </div>
+                <div class="footer-section">
+                    <h4>相關連結</h4>
+                    <a href="#" target="_blank">臺北市立聯合醫院</a>
+                    <a href="#" target="_blank">台灣失智症協會</a>
+                    <a href="#" target="_blank">衛生福利部</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 幸福小棧失智社區服務據點. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
